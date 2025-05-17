@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MapelController; // Tambahkan ini
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,21 +23,24 @@ Route::middleware('auth')->group(function () {
 // Route khusus untuk ADMIN
 Route::middleware(['auth', 'checkRole:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard'); // nanti bisa ganti ke controller
+        return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    // ✅ CRUD Mapel
+    Route::resource('/admin/mapel', MapelController::class);
 });
 
 // Route khusus untuk GURU
 Route::middleware(['auth', 'checkRole:guru'])->group(function () {
     Route::get('/guru/dashboard', function () {
-        return view('guru.dashboard'); // nanti bisa ganti ke controller
+        return view('guru.dashboard');
     })->name('guru.dashboard');
 });
 
 // Route khusus untuk SISWA
 Route::middleware(['auth', 'checkRole:siswa'])->group(function () {
     Route::get('/siswa/dashboard', function () {
-        return view('siswa.dashboard'); // nanti bisa ganti ke controller
+        return view('siswa.dashboard');
     })->name('siswa.dashboard');
 });
 
